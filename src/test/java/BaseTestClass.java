@@ -25,11 +25,13 @@ public class BaseTestClass {
         options.addArguments("start-maximized");
 
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
         driver.get(WEBSITE);
+
+
     }
 
     @After

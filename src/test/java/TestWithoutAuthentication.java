@@ -80,20 +80,24 @@ public class TestWithoutAuthentication extends BaseTestClass {
     }
 
     @Test
-    public void addToBasketTest() {
-        fillBasket();
+    public void addToCartTest() {
+        fillCart();
         int actualProductCount = Integer.parseInt(driver.findElement(By.xpath("//div[@data-type='basket']//span[@class='num products-count']")).getAttribute("innerText"));
         int expectedProductCount = 2;
         assertEquals(expectedProductCount, actualProductCount);
     }
 
     @Test
-    public void removeFromBasketTest() throws InterruptedException {
-        fillBasket();
+    public void removeFromCartTest() {
+        fillCart();
         driver.get(PERSONAL + "cart/");
-        WebElement remove = driver.findElement(By.xpath("(//div[@class='product-list']//div[@class='delete-wrap'])[1]"));
-        remove.click();
-        Thread.sleep(1000);
+        Actions removeFromCart = new Actions(driver);
+        removeFromCart
+                .moveToElement(driver.findElement(By.xpath("(//div[@class='product-list']//div[@class='delete-wrap'])[1]")))
+                .click()
+                .pause(Duration.ofSeconds(1))
+                .build()
+                .perform();
         String actualText = driver.findElement(By.xpath("(//div[@data-tab='incart'])[1]")).getText();
         String expectedText = "В КОРЗИНЕ (1 )";
         assertEquals(expectedText, actualText);
@@ -121,10 +125,10 @@ public class TestWithoutAuthentication extends BaseTestClass {
         menuSection.click();
     }
 
-    private void fillBasket() {
+    private void fillCart() {
         chooseMenuSection();
-        Actions addProductToBasket = new Actions(driver);
-        addProductToBasket
+        Actions addProductToCart = new Actions(driver);
+        addProductToCart
                 .moveToElement(driver.findElement(By.xpath("(//div[@class='catalog__items products']/div)[1]")))
                 .pause(Duration.ofSeconds(1))
                 .moveToElement(driver.findElement(By.xpath("(//div[@class='catalog__items products']/div)[1]//button[@class='btn buy-btn']")))
