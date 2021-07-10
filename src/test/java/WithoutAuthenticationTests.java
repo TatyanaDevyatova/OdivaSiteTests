@@ -13,7 +13,7 @@ import java.util.Set;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 
-public class TestWithoutAuthentication extends BaseTestClass {
+public class WithoutAuthenticationTests extends BaseTestClass {
 
     @Test
     public void cookieReceiveTest() {

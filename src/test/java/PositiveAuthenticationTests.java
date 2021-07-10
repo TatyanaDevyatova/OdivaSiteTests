@@ -4,23 +4,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
 
-public class TestWithAuthentication extends BaseTestClass {
+public class PositiveAuthenticationTests extends BaseTestClass {
 
     @Before
     @Override
     public void start() throws InterruptedException {
         super.start();
-        driver.findElement(By.xpath("//span[@class='auth__link sign-in']")).click();
-        driver.findElement(By.xpath("//input[@name='login']")).sendKeys("tester.qualitative@yandex.ru");
-        driver.findElement(By.xpath("//input[@name='pass']")).sendKeys("test_password");
-        driver.findElement(By.xpath("//button[text()='Войти']")).click();
+        openSignForm();
+        enterLogin();
+        enterPassword();
+        signConfirm();
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//div[@role='document']"))));
     }
 
     @Test
-    public void positiveAuth() {
+    public void authenticationTest() {
         WebElement profileName = driver.findElement(By.xpath("//div[@class='profile__name']"));
         String actualText = profileName.getText();
         String expectedText = "Tester";
@@ -35,6 +36,5 @@ public class TestWithAuthentication extends BaseTestClass {
         int expectedDiscount = 5;
         assertEquals(expectedDiscount, actualDiscount);
     }
-
 
 }
